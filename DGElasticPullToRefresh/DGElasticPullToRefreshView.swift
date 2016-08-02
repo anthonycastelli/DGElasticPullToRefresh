@@ -38,7 +38,7 @@ enum DGElasticPullToRefreshState: Int {
     case animatingToStopped
     
     func isAnyOf(_ values: [DGElasticPullToRefreshState]) -> Bool {
-        return values.contains({ $0 == self })
+        return values.contains(where: { $0 == self })
     }
 }
 
@@ -103,7 +103,7 @@ public class DGElasticPullToRefreshView: UIView {
         }
     }
     
-    var fillColor: UIColor = .clear() { didSet { shapeLayer.fillColor = fillColor.cgColor } }
+    var fillColor: UIColor = UIColor.clear { didSet { shapeLayer.fillColor = fillColor.cgColor } }
     
     // MARK: Views
     
@@ -127,8 +127,8 @@ public class DGElasticPullToRefreshView: UIView {
         displayLink.add(to: RunLoop.main, forMode: RunLoopMode.commonModes)
         displayLink.isPaused = true
         
-        shapeLayer.backgroundColor = UIColor.clear().cgColor
-        shapeLayer.fillColor = UIColor.black().cgColor
+        shapeLayer.backgroundColor = UIColor.clear.cgColor
+        shapeLayer.fillColor = UIColor.black.cgColor
         shapeLayer.actions = ["path" : NSNull(), "position" : NSNull(), "bounds" : NSNull()]
         layer.addSublayer(shapeLayer)
         
@@ -170,7 +170,7 @@ public class DGElasticPullToRefreshView: UIView {
                 layoutSubviews()
             }
         } else if keyPath == DGElasticPullToRefreshConstants.KeyPaths.ContentInset {
-            if let newContentInsetTop = change?[NSKeyValueChangeKey.newKey]?.uiEdgeInsetsValue().top {
+            if let newContentInsetTop = change?[NSKeyValueChangeKey.newKey]?.uiEdgeInsetsValue.top {
                 originalContentInsetTop = newContentInsetTop
             }
         } else if keyPath == DGElasticPullToRefreshConstants.KeyPaths.Frame {
