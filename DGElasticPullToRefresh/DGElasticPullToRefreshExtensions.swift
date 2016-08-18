@@ -35,11 +35,11 @@ public extension NSObject {
     // MARK: -
     // MARK: Vars
     
-    private struct dg_associatedKeys {
+    fileprivate struct dg_associatedKeys {
         static var observersArray = "observers"
     }
     
-    private var dg_observers: [[String : NSObject]] {
+    fileprivate var dg_observers: [[String : NSObject]] {
         get {
             if let observers = objc_getAssociatedObject(self, &dg_associatedKeys.observersArray) as? [[String : NSObject]] {
                 return observers
@@ -84,11 +84,11 @@ public extension UIScrollView {
     // MARK: -
     // MARK: Vars
     
-    private struct dg_associatedKeys {
+    fileprivate struct dg_associatedKeys {
         static var pullToRefreshView = "pullToRefreshView"
     }
     
-    private var _pullToRefreshView: DGElasticPullToRefreshView? {
+    fileprivate var _pullToRefreshView: DGElasticPullToRefreshView? {
         get {
             if let pullToRefreshView = objc_getAssociatedObject(self, &dg_associatedKeys.pullToRefreshView) as? DGElasticPullToRefreshView {
                 return pullToRefreshView
@@ -101,7 +101,7 @@ public extension UIScrollView {
         }
     }
     
-    private var pullToRefreshView: DGElasticPullToRefreshView! {
+    fileprivate var pullToRefreshView: DGElasticPullToRefreshView! {
         get {
             if let pullToRefreshView = _pullToRefreshView {
                 return pullToRefreshView
@@ -116,11 +116,11 @@ public extension UIScrollView {
     // MARK: -
     // MARK: Methods (Public)
     
-    public func dg_addPullToRefreshWithActionHandler(_ actionHandler: () -> Void) {
+    public func dg_addPullToRefreshWithActionHandler(_ actionHandler: @escaping () -> Void) {
         dg_addPullToRefreshWithActionHandler(actionHandler, loadingView: nil)
     }
     
-    public func dg_addPullToRefreshWithActionHandler(_ actionHandler: () -> Void, loadingView: DGElasticPullToRefreshLoadingView?) {
+    public func dg_addPullToRefreshWithActionHandler(_ actionHandler: @escaping () -> Void, loadingView: DGElasticPullToRefreshLoadingView?) {
         isMultipleTouchEnabled = false
         panGestureRecognizer.maximumNumberOfTouches = 1
         
