@@ -160,7 +160,8 @@ open class DGElasticPullToRefreshView: UIView {
     
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == DGElasticPullToRefreshConstants.KeyPaths.ContentOffset {
-            if let newContentOffset = change?[NSKeyValueChangeKey.newKey] as? CGPoint, let scrollView = scrollView() {
+            if let offset = change?[NSKeyValueChangeKey.newKey] as? NSValue, let scrollView = scrollView() {
+                let newContentOffset = offset.cgPointValue
                 if state.isAnyOf([.loading, .animatingToStopped]) && newContentOffset.y < -scrollView.contentInset.top {
                     scrollView.dg_stopScrollingAnimation()
                     scrollView.contentOffset.y = -scrollView.contentInset.top
@@ -170,7 +171,8 @@ open class DGElasticPullToRefreshView: UIView {
                 layoutSubviews()
             }
         } else if keyPath == DGElasticPullToRefreshConstants.KeyPaths.ContentInset {
-            if let newContentInset = change?[NSKeyValueChangeKey.newKey] as? UIEdgeInsets {
+            if let value = change?[NSKeyValueChangeKey.newKey] as? NSValue {
+                let newContentInset = value.uiEdgeInsetsValue
                 originalContentInsetTop = newContentInset.top
             }
         } else if keyPath == DGElasticPullToRefreshConstants.KeyPaths.Frame {
